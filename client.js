@@ -2,13 +2,6 @@ const fs = require('fs')
 const fetch = require('node-fetch')
 const dayjs = require('dayjs')
 
-const urls = {
-  'checkin': "https://api.worky.mx/api/v1/time_clock/web/%s/checkin/",
-  'checkout': "https://api.worky.mx/api/v1/time_clock/web/%s/checkout/",
-  'login': "https://api.worky.mx/token/",
-  'me': 'https://api.worky.mx/api/v1/me/'
-}
-
 function login(username, password) {
   return new Promise((resolve, reject) => {
     fetch("https://api.worky.mx/token/", {
