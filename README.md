@@ -1,4 +1,4 @@
-## Proof of concept to programatically checkin/checkout of worky
+## Proof of concept to programatically checkin/checkout on worky
 
 This code is for educational purposes only.
 
@@ -14,4 +14,4 @@ Requirements: node 12
 
 ### Usage
 
-Just run `node client.js`, at any given time of the day, it will send a both checkin and checkout requests to worky at 9:00am and 5:00pm respectively.
+Just run `node client.js`, at any given time of the day, it will send a both checkin and checkout requests to worky using 9:00am and 5:00pm respectively.
