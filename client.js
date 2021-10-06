@@ -77,11 +77,18 @@ const config = JSON.parse(
 login(config.username, config.password).then(async response => {
   let info = await me(response.token)
   let employee_id = info.employee.id
-  let today = dayjs().format("YYYY-MM-DD")
-  let success = await checkin(response.token, employee_id, today+' 09:00')
-  console.log('checkin: ', success)
+  let today = dayjs()
 
-  success = await checkout(response.token, employee_id, today+' 17:00')
-  console.log('checkout: ', success)
+  today.$H = 8
+  today.$m = 59-Math.floor(Math.random()*30)
+  let entry_date = today.format("YYYY-MM-DD HH:mm")
+  let success = await checkin(response.token, employee_id, entry_date)
+  console.log('checkin: ', entry_date)
+
+  today.$H = 17
+  today.$m = Math.floor(Math.random()*30)
+  let exit_date = today.format("YYYY-MM-DD HH:mm")
+  success = await checkout(response.token, employee_id, exit_date)
+  console.log('checkout: ', exit_date)
 
 })
