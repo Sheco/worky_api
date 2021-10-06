@@ -3,14 +3,15 @@ const fetch = require('node-fetch')
 const dayjs = require('dayjs')
 
 const urls = {
-  'checkin': "https://api.worky.mx/api/v1/time_clock/web/71c76b80-867e-4c09-b890-8d7aec118fbc/checkin/",
-  'checkout': "https://api.worky.mx/api/v1/time_clock/web/71c76b80-867e-4c09-b890-8d7aec118fbc/checkout/",
-  'login': "https://api.worky.mx/token/"
+  'checkin': "https://api.worky.mx/api/v1/time_clock/web/%s/checkin/",
+  'checkout': "https://api.worky.mx/api/v1/time_clock/web/%s/checkout/",
+  'login': "https://api.worky.mx/token/",
+  'me': 'https://api.worky.mx/api/v1/me/'
 }
 
 function login(username, password) {
   return new Promise((resolve, reject) => {
-    fetch(urls.login, {
+    fetch("https://api.worky.mx/token/", {
       'method':'POST',
       'headers': {
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0',
@@ -24,9 +25,27 @@ function login(username, password) {
   })
 }
 
-function checkin(token, date) {
+function me(token) {
   return new Promise((resolve, reject) => {
-    fetch(urls.checkin, {
+    fetch('https://api.worky.mx/api/v1/me/', {
+      'headers': {
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0',
+        'Content-Type':'application/json',
+        'Authorization':'JWT '+token,
+      },
+    })
+    .then(data => data.json())
+    .then(data => resolve(data))
+    .catch(error => {
+      reject(error)
+    })
+    
+  })
+}
+
+function checkin(token, employee_id, date) {
+  return new Promise((resolve, reject) => {
+    fetch(`https://api.worky.mx/api/v1/time_clock/web/${employee_id}/checkin/`, {
       'method':'POST',
       'headers': {
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0',
@@ -41,9 +60,9 @@ function checkin(token, date) {
   })
 }
 
-function checkout(token, date) {
+function checkout(token, employee_id, date) {
   return new Promise((resolve, reject) => {
-    fetch(urls.checkout, {
+    fetch(`https://api.worky.mx/api/v1/time_clock/web/${employee_id}/checkout/`, {
       'method':'POST',
       'headers': {
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0',
@@ -63,11 +82,13 @@ const config = JSON.parse(
 )
 
 login(config.username, config.password).then(async response => {
+  let info = await me(response.token)
+  let employee_id = info.employee.id
   let today = dayjs().format("YYYY-MM-DD")
-  let success = await checkin(response.token, today+' 09:00')
+  let success = await checkin(response.token, employee_id, today+' 09:00')
   console.log('checkin: ', success)
 
-  success = await checkout(response.token, today+' 17:00')
+  success = await checkout(response.token, employee_id, today+' 17:00')
   console.log('checkout: ', success)
 
 })
