@@ -36,6 +36,8 @@ worky.login(username, password).then(async () => {
   let exit_date = today.format("YYYY-MM-DD HH:mm")
   await checkout(exit_date)
   console.log('checkout: ', exit_date)
-
+}).catch(errors => {
+  console.error(errors)
+  process.exit(1)
 })
 
