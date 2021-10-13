@@ -34,7 +34,7 @@ worky.login(username, password).then(async () => {
   today.$H = 17
   today.$m = Math.floor(Math.random()*30)
   let exit_date = today.format("YYYY-MM-DD HH:mm")
-  await checkout(exit_date)
+  await worky.checkout(exit_date)
   console.log('checkout: ', exit_date)
 }).catch(errors => {
   console.error(errors)
