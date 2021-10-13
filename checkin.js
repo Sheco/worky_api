@@ -2,7 +2,9 @@ const process = require('process');
 const Worky = require('./worky')
 
 function usage() {
-  console.error("Usage: node checkin.js {username} {entry_date} {exit_date} < password.txt")
+  console.error("Usage: node checkin.js {username} {entry_date} {exit_date}")
+  console.error("The password is read from the standard input, so you can either")
+  console.error("type it or pipe it in like node checkin.js {args...} < password.txt")
   process.exit(1)
 }
 
