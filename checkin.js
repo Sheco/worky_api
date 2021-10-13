@@ -1,6 +1,4 @@
 const process = require('process');
-const fs = require("fs");
-
 const Worky = require('./worky')
 
 function usage() {
@@ -23,21 +21,20 @@ if (username == undefined) {
   usage()
 }
 
-let password
-try {
-  password = fs.readFileSync(0).toString().trim();
-} catch (error) {
-  console.error("Error: could not read the password from the standard input")
-  usage()
-}
-
-
-const worky = new Worky()
-worky.login(username, password).then(async () => {
-  await worky.checkin(entry_date)
-  await worky.checkout(exit_date)
-}).catch(errors => {
-  console.error(errors)
-  process.exit(1)
+process.stdin.on('data', data => {
+  // we're trimming the input so this means
+  // users whose passwords start or end with 
+  // spaces won't be able to use this tool for now
+  // ¯\_(ツ)_/¯
+  const password = data.toString().trim()
+  const worky = new Worky()
+  worky.login(username, password).then(async () => {
+    await worky.checkin(entry_date)
+    await worky.checkout(exit_date)
+      process.exit(0)
+  }).catch(errors => {
+    console.error(errors)
+    process.exit(1)
+  })
 })
 
