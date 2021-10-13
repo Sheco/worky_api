@@ -3,6 +3,11 @@ const fs = require("fs");
 
 const Worky = require('./worky')
 
+function usage() {
+  console.error("Usage: node checkin.js {username} {entry_date} {exit_date} < password.txt")
+  process.exit(1)
+}
+
 const username = process.argv[2]
 const entry_date = process.argv[3]
 const exit_date = process.argv[4]
@@ -12,10 +17,6 @@ if (exit_date == undefined) {
   usage()
 }
 
-function usage() {
-  console.error("Usage: node checkin.js {username} {entry_date} {exit_date} < password.txt")
-  process.exit(1)
-}
 
 if (username == undefined) {
   console.error("Error: no username specified")
