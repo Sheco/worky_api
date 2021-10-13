@@ -6,10 +6,14 @@ const Worky = require('./worky')
 
 const username = process.argv[2]
 
+function usage() {
+  console.error("Usage: node checkin.js {username} {entry_date} {exit_date} < password.txt")
+  process.exit(1)
+}
+
 if (username == undefined) {
   console.error("Error: no username specified")
-  console.error("Usage: node checkin.js {username} < password.txt")
-  process.exit(1)
+  usage()
 }
 
 let password
@@ -17,25 +21,21 @@ try {
   password = fs.readFileSync(0).toString().trim(); // STDIN_FILENO = 0
 } catch (error) {
   console.error("Error: could not read the password from the standard input")
-  console.error("Usage: node checkin.js {username} < password.txt")
-  process.exit(1)
+  usage()
+}
+
+const entry_date = process.argv[3]
+const exit_date = process.argv[4]
+
+if (exit_date == undefined) {
+  console.error("Error: exit date undefined");
+  usage()
 }
 
 worky = new Worky()
 worky.login(username, password).then(async () => {
-  let today = dayjs()
-
-  today.$H = 8
-  today.$m = 59-Math.floor(Math.random()*30)
-  let entry_date = today.format("YYYY-MM-DD HH:mm")
   await worky.checkin(entry_date)
-  console.log('checkin: ', entry_date)
-
-  today.$H = 17
-  today.$m = Math.floor(Math.random()*30)
-  let exit_date = today.format("YYYY-MM-DD HH:mm")
   await worky.checkout(exit_date)
-  console.log('checkout: ', exit_date)
 }).catch(errors => {
   console.error(errors)
   process.exit(1)
