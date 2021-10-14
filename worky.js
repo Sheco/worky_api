@@ -61,7 +61,7 @@ class Worky {
         },
         'body': JSON.stringify({'entry_date': date})
       })
-      .then(response => response.json())
+      .then(response => response.text())
       .then(response => {
         if(response.errors) {
           reject(response.errors)
@@ -84,7 +84,7 @@ class Worky {
         },
         'body': JSON.stringify({'exit_date': date})
       })
-      .then(response => response.json())
+      .then(response => response.text())
       .then(response => {
         if(response.errors) {
           reject(response.errors)
