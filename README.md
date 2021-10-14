@@ -9,8 +9,6 @@ The intention is to show how to checkin/checkout programatically, sending crafte
 Requirements: node 12
 
 - Run `npm install`
-- Edit the config.json file, using your worky credentials
-
 
 ### Usage
 
