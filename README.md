@@ -32,7 +32,7 @@ For example:
 $ nodejs checkin.js user@email.com "2021-10-10 9:00" "2021-10-10 17:00" < password.txt
 ```
 
-There's also a checkin_random.js script, which is a convenience script to checkin and out with randomized dates (30 minutes before 9am and 30 minutes after 5pm)
+There's also a checkin_random.js script, which is a convenience script to checkin and out with randomized times (30 minutes before 9am and 30 minutes after 5pm)
 
 ```
 $ nodejs checkin_random.js user@mail.com < password.txt
