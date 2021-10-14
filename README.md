@@ -14,4 +14,26 @@ Requirements: node 12
 
 ### Usage
 
-Just run `node client.js`, at any given time of the day, it will send a both checkin and checkout requests to worky using 9:00am and 5:00pm respectively.
+The checkin script's signature is:
+
+```
+nodejs checkin.js {username} {entry_date} {exit_date}
+username: email address for your Worky account
+entry_date: full checkin date (YYYY-MM-DD HH:mm) 
+exit_date: full checkout date (YYYY-MM-DD HH:mm)
+
+The dates are expected as a single variable so make sure they're quoted.
+The script expects the password on the standard input, it's recommended to pipe it in.
+```
+
+For example:
+
+```
+$ nodejs checkin.js user@email.com "2021-10-10 9:00" "2021-10-10 17:00" < password.txt
+```
+
+There's also a checkin_random.js script, which is a convenience script to checkin and out with randomized dates (30 minutes before 9am and 30 minutes after 5pm)
+
+```
+$ nodejs checkin_random.js user@mail.com < password.txt
+```
