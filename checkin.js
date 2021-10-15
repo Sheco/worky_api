@@ -32,7 +32,9 @@ process.stdin.on('data', data => {
   const worky = new Worky()
   worky.login(username, password).then(async () => {
     await worky.checkin(entry_date)
+    console.log(`Checkin in at ${entry_date}`)
     await worky.checkout(exit_date)
+    console.log(`Checking out at ${exit_date}`)
       process.exit(0)
   }).catch(errors => {
     console.error(errors)
