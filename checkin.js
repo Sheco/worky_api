@@ -35,7 +35,7 @@ process.stdin.on('data', data => {
     console.log(`Checkin in at ${entry_date}`)
     await worky.checkout(exit_date)
     console.log(`Checking out at ${exit_date}`)
-      process.exit(0)
+    process.exit(0)
   }).catch(errors => {
     console.error(errors)
     process.exit(1)
