@@ -20,11 +20,11 @@ export default class Worky {
       })
       .then(response => response.json())
       .then(async response => {
-        if(response.errors) {
-          reject(response.errors)
+        if(response['errors'] !== undefined) {
+          reject(response['errors'])
           return
         }
-        this.token = response.token
+        this.token = response['token']
         this.me = await this.fetchme()
         resolve()
       })
@@ -39,8 +39,8 @@ export default class Worky {
       })
       .then(response => response.json())
       .then(response => {
-        if(response.errors) {
-          reject(response.errors)
+        if(response['errors'] !== undefined) {
+          reject(response['errors'])
           return
         }
         resolve(response)
