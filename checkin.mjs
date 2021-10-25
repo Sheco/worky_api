@@ -1,5 +1,4 @@
-const process = require('process');
-const Worky = require('./worky')
+import Worky from './worky.mjs'
 
 function usage() {
   console.error("Usage: node checkin.js {username} {entry_date} {exit_date}")

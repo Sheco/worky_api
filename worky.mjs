@@ -1,6 +1,6 @@
-const fetch = require('node-fetch')
+import fetch from 'node-fetch'
 
-class Worky {
+export default class Worky {
   async login(username, password) {
     return new Promise((resolve, reject) => {
       fetch("https://api.worky.mx/token/", {
@@ -96,5 +96,3 @@ class Worky {
     })
   }
 }
-
-module.exports = Worky

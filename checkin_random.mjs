@@ -1,5 +1,5 @@
-const child_process = require('child_process')
-const dayjs = require('dayjs')
+import * as child_process from 'child_process'
+import dayjs from 'dayjs'
 
 let today = dayjs()
 today.$H = 8
@@ -20,7 +20,7 @@ if (username == undefined) {
   usage()
 }
 
-child_process.fork("checkin.js", [username, entry_date, exit_date], {
+child_process.fork("checkin.mjs", [username, entry_date, exit_date], {
   'stdio': [
     'inherit', 
     'inherit', 
