@@ -62,10 +62,6 @@ export default class Worky {
       })
       .then(response => response.text())
       .then(response => {
-        if(response.errors) {
-          reject(response.errors)
-          return
-        }
         resolve(response)
       })
       .catch(error => reject(error))
@@ -81,10 +77,6 @@ export default class Worky {
       })
       .then(response => response.text())
       .then(response => {
-        if(response.errors) {
-          reject(response.errors)
-          return
-        }
         resolve(response)
       })
       .catch(error => reject(error))
