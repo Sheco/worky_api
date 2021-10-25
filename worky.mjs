@@ -60,10 +60,7 @@ export default class Worky {
         'headers': this.headers(),
         'body': JSON.stringify({'entry_date': date})
       })
-      .then(response => response.text())
-      .then(response => {
-        resolve(response)
-      })
+      .then(response => resolve(response.text()))
       .catch(error => reject(error))
     })
   }
@@ -75,10 +72,7 @@ export default class Worky {
         'headers': this.headers(),
         'body': JSON.stringify({'exit_date': date})
       })
-      .then(response => response.text())
-      .then(response => {
-        resolve(response)
-      })
+      .then(response => resolve(response.text()))
       .catch(error => reject(error))
     })
   }
