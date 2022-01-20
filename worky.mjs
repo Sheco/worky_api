@@ -60,7 +60,14 @@ export default class Worky {
         'headers': this.headers(),
         'body': JSON.stringify({'entry_date': date})
       })
-      .then(response => resolve(response.text()))
+      .then(response => response.text())
+      .then(response => response.trim())
+      .then(response => {
+        if (response !== "") {
+          response = JSON.parse(response)
+          reject(response.errors)
+        }
+      })
       .catch(error => reject(error))
     })
   }
@@ -72,7 +79,14 @@ export default class Worky {
         'headers': this.headers(),
         'body': JSON.stringify({'exit_date': date})
       })
-      .then(response => resolve(response.text()))
+      .then(response => response.text())
+      .then(response => response.trim())
+      .then(response => {
+        if (response !== "") {
+          response = JSON.parse(response)
+          reject(response.errors)
+        }
+      })
       .catch(error => reject(error))
     })
   }

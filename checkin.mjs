@@ -30,13 +30,14 @@ process.stdin.on('data', data => {
   const password = data.toString().trim()
   const worky = new Worky()
   worky.login(username, password).then(async () => {
-    await worky.checkin(entry_date)
-    console.log(`Checkin in at ${entry_date}`)
-    await worky.checkout(exit_date)
-    console.log(`Checking out at ${exit_date}`)
+    let response
+    response = await worky.checkin(entry_date)
+    console.log(`Checking in at ${entry_date}, Response: ${response}`)
+    response = await worky.checkout(exit_date)
+    console.log(`Checking out at ${exit_date}, Response: ${response}`)
     process.exit(0)
   }).catch(errors => {
-    console.error(errors)
+    console.error('ERROR', errors)
     process.exit(1)
   })
 })
