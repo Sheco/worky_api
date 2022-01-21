@@ -66,7 +66,9 @@ export default class Worky {
         if (response !== "") {
           response = JSON.parse(response)
           reject(response.errors)
+          return
         }
+        resolve(response)
       })
       .catch(error => reject(error))
     })
@@ -85,7 +87,9 @@ export default class Worky {
         if (response !== "") {
           response = JSON.parse(response)
           reject(response.errors)
+          return
         }
+        resolve(response)
       })
       .catch(error => reject(error))
     })
