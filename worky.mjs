@@ -98,9 +98,8 @@ export default class Worky {
         'body': JSON.stringify({'entry_date': date})
       })
       .then(response => response.text())
-      .then(response => response.trim())
       .then(response => {
-        if (response !== "") {
+        if (response !== "\n") {
           response = JSON.parse(response)
           reject(response.errors)
           return
@@ -126,9 +125,8 @@ export default class Worky {
         'body': JSON.stringify({'exit_date': date})
       })
       .then(response => response.text())
-      .then(response => response.trim())
       .then(response => {
-        if (response !== "") {
+        if (response !== "\n") {
           response = JSON.parse(response)
           reject(response.errors)
           return
