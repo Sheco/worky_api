@@ -2,6 +2,7 @@
   "dependencies": {
     "dayjs": "^1.10.7",
     "minimist": "^1.2.5",
-    "node-fetch": "^3.0.0"
+    "node-fetch": "^3.0.0",
+    "password-prompt": "^1.1.2"
   }
 }

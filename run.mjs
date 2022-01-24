@@ -1,6 +1,6 @@
 import Worky from './worky.mjs'
 import minimist from 'minimist'
-
+import passprompt from 'password-prompt'
 
 function usage() {
   console.error("Usage: node checkin.js {username} {entry_date} {exit_date}")
@@ -24,12 +24,8 @@ if (username == undefined) {
   usage()
 }
 
-process.stdin.on('data', data => {
-  // we're trimming the input so this means
-  // users whose passwords start or end with 
-  // spaces won't be able to use this tool for now
-  // ¯\_(ツ)_/¯
-  const password = data.toString().trim()
+passprompt('Password: ')
+  .then(password => {
   const worky = new Worky()
   worky.login(username, password).then(async () => {
     if (args.checkin) {
