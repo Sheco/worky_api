@@ -11,7 +11,7 @@ import fetch from 'node-fetch'
  * The checkin and checkout endpoints are our current goal, 
  * to run those, we need to get the JWT token and the employee id
  * to get the token, the login endpoint will gladly create it for us
- * to get the employee id, we need to ask for it to the fetchme method
+ * to get the employee id, we need to ask for it to the me method
  * 
  */
 export default class Worky {
@@ -50,7 +50,7 @@ export default class Worky {
           return
         }
         this.token = response['token']
-        this.me = await this.fetchme()
+        this.user = await this.me()
         resolve()
       })
       .catch(response => reject(response))
@@ -62,7 +62,7 @@ export default class Worky {
    *
    * on error, it returns an json object with an error item
    */
-  async fetchme() {
+  async me() {
     return new Promise((resolve, reject) => {
       fetch('https://api.worky.mx/api/v1/me/', {
         'headers': this.headers()
@@ -92,7 +92,7 @@ export default class Worky {
    */
   async checkin(date) {
     return new Promise((resolve, reject) => {
-      fetch(`https://api.worky.mx/api/v1/time_clock/web/${this.me.employee.id}/checkin/`, {
+      fetch(`https://api.worky.mx/api/v1/time_clock/web/${this.user.employee.id}/checkin/`, {
         'method':'POST',
         'headers': this.headers(),
         'body': JSON.stringify({'entry_date': date})
@@ -120,7 +120,7 @@ export default class Worky {
    */
   async checkout(date) {
     return new Promise((resolve, reject) => {
-      fetch(`https://api.worky.mx/api/v1/time_clock/web/${this.me.employee.id}/checkout/`, {
+      fetch(`https://api.worky.mx/api/v1/time_clock/web/${this.user.employee.id}/checkout/`, {
         'method':'POST',
         'headers': this.headers(),
         'body': JSON.stringify({'exit_date': date})
