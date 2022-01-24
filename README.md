@@ -8,32 +8,30 @@ The intention is to show how to checkin/checkout programatically, sending crafte
 
 Requirements: node 14
 
-This package uses ES modules, available in nodejs 14.
-
 - Run `npm install`
 
 ### Usage
 
-The checkin script's signature is:
+The run.mjs script's signature is:
 
 ```
-nodejs checkin.js {username} {entry_date} {exit_date}
+nodejs run.mjs {--user username} [--checkin entry_date] [--checkout exit_date]
 username: email address for your Worky account
 entry_date: full checkin date (YYYY-MM-DD HH:mm) 
 exit_date: full checkout date (YYYY-MM-DD HH:mm)
 
 The dates are expected as a single variable so make sure they're quoted.
-The script expects the password on the standard input, it's recommended to pipe it in.
+The script will ask for the password when ran.
 ```
 
 For example:
 
 ```
-$ nodejs checkin.js user@email.com "2021-10-10 9:00" "2021-10-10 17:00" < password.txt
+$ node run.mjs --user user@email.com "2021-10-10 9:00" "2021-10-10 17:00"
 ```
 
 There's also a checkin_random.js script, which is a convenience script to checkin and out with randomized times (30 minutes before 9am and 30 minutes after 5pm)
 
 ```
-$ nodejs checkin_random.js user@mail.com < password.txt
+$ node checkin_random.mjs --user user@mail.com
 ```
