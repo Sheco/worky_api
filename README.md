@@ -27,7 +27,7 @@ The script will ask for the password when ran.
 For example:
 
 ```
-$ node run.mjs --user user@email.com "2021-10-10 9:00" "2021-10-10 17:00"
+$ node run.mjs --user user@email.com --checkin "2021-10-10 9:00" --checkout "2021-10-10 17:00"
 ```
 
 There's also a checkin_random.js script, which is a convenience script to checkin and out with randomized times (30 minutes before 9am and 30 minutes after 5pm)
