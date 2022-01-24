@@ -13,17 +13,6 @@ var args = minimist(process.argv.slice(2));
 
 const username = args.user
 
-if (exit_date == undefined) {
-  console.error("Error: exit date undefined");
-  usage()
-}
-
-
-if (username == undefined) {
-  console.error("Error: no username specified")
-  usage()
-}
-
 passprompt('Password: ')
   .then(password => {
   const worky = new Worky()
