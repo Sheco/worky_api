@@ -8,7 +8,7 @@ The intention is to show how to checkin/checkout programatically, sending crafte
 
 Requirements: node 14
 
-This package uses ES modules, available in nodejs 14, to run this in nodejs 12, you have to add `--experimental-modules` to nodejs's arguments in the command line.
+This package uses ES modules, available in nodejs 14.
 
 - Run `npm install`
 

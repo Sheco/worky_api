@@ -13,24 +13,22 @@ var args = minimist(process.argv.slice(2));
 
 const username = args.user
 
-passprompt('Password: ')
-  .then(password => {
-  const worky = new Worky()
-  worky.login(username, password).then(async () => {
-    if (args.checkin) {
-      await worky.checkin(args.checkin)
-      console.log(`Checking in at ${args.checkin}`)
-    }
+const password = await passprompt('Password: ')
+const worky = new Worky()
+try {
+  await worky.login(username, password)
+  if (args.checkin) {
+    await worky.checkin(args.checkin)
+    console.log(`Checking in at ${args.checkin}`)
+  }
 
-    if (args.checkout) {
-      await worky.checkout(args.checkout)
-      console.log(`Checking out at ${args.checkout}`)
-    }
-    process.exit(0)
-  }).catch(errors => {
-    console.error('ERROR', errors)
-    process.exit(1)
-  })
-})
-
+  if (args.checkout) {
+    await worky.checkout(args.checkout)
+    console.log(`Checking out at ${args.checkout}`)
+  }
+  process.exit(0)
+} catch (errors) {
+  console.error('ERROR', errors)
+  process.exit(1)
+}
 
