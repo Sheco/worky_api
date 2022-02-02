@@ -4,9 +4,7 @@ import Worky from './worky.mjs'
 import minimist from 'minimist'
 
 function usage() {
-  console.error("Usage: node checkin.js {username} {entry_date} {exit_date}")
-  console.error("The password is read from the standard input, so you can either")
-  console.error("type it or pipe it in like node checkin.js {args...} < password.txt")
+  console.error("Usage: node checkin.js {--user username} {--checkin entry_date} {--checkout exit_date} {--passwordfile path}")
   process.exit(1)
 }
 
