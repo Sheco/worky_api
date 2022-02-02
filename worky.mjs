@@ -87,7 +87,7 @@ export default class Worky {
    *
    * In the POST data, it expects an `entry_date` item with the checkin date
    *
-   * On success, it returns an empty string (just a newline)
+   * On success, it returns an empty string
    * On error, it returns a json object with an error item
    */
   async checkin(date) {
@@ -99,7 +99,7 @@ export default class Worky {
       })
       .then(response => response.text())
       .then(response => {
-        if (response !== "\n") {
+        if (response !== "") {
           response = JSON.parse(response)
           reject(response.errors)
           return
@@ -114,7 +114,7 @@ export default class Worky {
    *
    * In the POST data, it expects an `exit_date` item with the checkout date
    *
-   * On success, it returns an empty string (just a newline)
+   * On success, it returns an empty string
    * On error, it returns a json object with an error item
    */
   async checkout(date) {
@@ -126,7 +126,7 @@ export default class Worky {
       })
       .then(response => response.text())
       .then(response => {
-        if (response !== "\n") {
+        if (response !== "") {
           response = JSON.parse(response)
           reject(response.errors)
           return
