@@ -6,7 +6,7 @@ The intention is to show how to checkin/checkout programatically, sending crafte
 
 ### Installation
 
-Requirements: node 14
+Requirements: Nodejs 14
 
 - Run `npm install`
 
@@ -17,12 +17,11 @@ The run.mjs script's signature is:
 ```
 nodejs run.mjs {--user username} {--passwordfile path} [--checkin entry_date] [--checkout exit_date]
 username: email address for your Worky account
-entry_date: full checkin date (YYYY-MM-DD HH:mm) 
-exit_date: full checkout date (YYYY-MM-DD HH:mm)
+checkin: full checkin date (YYYY-MM-DD HH:mm) 
+checkout: full checkout date (YYYY-MM-DD HH:mm)
 passwordfile: a text file containing the account's password
 
 The dates are expected as a single variable so make sure they're quoted.
-The script will ask for the password when ran.
 ```
 
 For example:
