@@ -1,6 +1,7 @@
+import { readFileSync } from 'fs';
+
 import Worky from './worky.mjs'
 import minimist from 'minimist'
-import passprompt from 'password-prompt'
 
 function usage() {
   console.error("Usage: node checkin.js {username} {entry_date} {exit_date}")
@@ -12,8 +13,9 @@ function usage() {
 var args = minimist(process.argv.slice(2));
 
 const username = args.user
+const passwordfile = args.passwordfile
+const password = readFileSync(passwordfile, {encoding: 'utf8'})
 
-const password = await passprompt('Password: ')
 const worky = new Worky()
 try {
   await worky.login(username, password)
@@ -31,4 +33,3 @@ try {
   console.error('ERROR', errors)
   process.exit(1)
 }
-

@@ -20,7 +20,7 @@ if (username == undefined) {
   usage()
 }
 
-child_process.fork("run.mjs", ['--user', username, '--checkin', entry_date, '--checkout', exit_date], {
+child_process.fork("run.mjs", ['--user', username, '--checkin', entry_date, '--checkout', exit_date, '--passwordfile', 'password.txt'], {
   'stdio': [
     'inherit', 
     'inherit', 
