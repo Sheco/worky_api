@@ -10,6 +10,10 @@ function usage() {
 
 var args = minimist(process.argv.slice(2));
 
+if (!args.user || !args.passwordfile) {
+  usage()
+}
+
 const username = args.user
 const passwordfile = args.passwordfile
 const password = readFileSync(passwordfile, {encoding: 'utf8'})
