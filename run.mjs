@@ -18,13 +18,13 @@ const worky = new Worky()
 try {
   await worky.login(username, password)
   if (args.checkin) {
-    await worky.checkin(args.checkin)
     console.log(`Checking in at ${args.checkin}`)
+    await worky.checkin(args.checkin)
   }
 
   if (args.checkout) {
-    await worky.checkout(args.checkout)
     console.log(`Checking out at ${args.checkout}`)
+    await worky.checkout(args.checkout)
   }
   process.exit(0)
 } catch (errors) {
