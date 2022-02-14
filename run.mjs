@@ -4,7 +4,7 @@ import Worky from './worky.mjs'
 import minimist from 'minimist'
 
 function usage() {
-  console.error("Usage: node checkin.js {--user username} {--checkin entry_date} {--checkout exit_date} {--passwordfile path}")
+  console.error("Usage: node checkin.js {--user username} {--passwordfile path} [--checkin entry_date] [--checkout exit_date]")
   process.exit(1)
 }
 
