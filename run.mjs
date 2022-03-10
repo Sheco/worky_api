@@ -1,22 +1,20 @@
-import { readFileSync } from 'fs';
-
 import Worky from './worky.mjs'
 import minimist from 'minimist'
+import 'dotenv/config'
 
 function usage() {
-  console.error("Usage: node checkin.js {--user username} {--passwordfile path} [--checkin entry_date] [--checkout exit_date]")
+  console.error("Usage: node checkin.js [--checkin entry_date] [--checkout exit_date]")
   process.exit(1)
 }
 
 var args = minimist(process.argv.slice(2));
 
-if (!args.user || !args.passwordfile) {
-  usage()
-}
+const username = process.env.WORKY_USER
+const password = process.env.WORKY_PASS
 
-const username = args.user
-const passwordfile = args.passwordfile
-const password = readFileSync(passwordfile, {encoding: 'utf8'})
+if (!username) {
+  usage() 
+}
 
 const worky = new Worky()
 try {
