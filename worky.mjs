@@ -15,19 +15,13 @@ import fetch from 'node-fetch'
  * 
  */
 export default class Worky {
-  headers() {
-    /* We are masquerading a Firefox browser */
-    let headers = {
-          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0',
-          'Content-Type':'application/json',
-    }
-
-    // provide the token if we have it
-    if (this.token !== undefined) {
-          headers['Authorization'] = 'JWT ' + this.token
-    }
-    return headers
+  constructor() {
+    this.headers = {
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0',
+            'Content-Type':'application/json',
+      }
   }
+
   /*
    * The login method expects a user and a password
    * it returns a json response containing the token
@@ -40,7 +34,7 @@ export default class Worky {
     return new Promise((resolve, reject) => {
       fetch("https://api.worky.mx/token/", {
         'method':'POST',
-        'headers': this.headers(),
+        'headers': this.headers,
         'body': JSON.stringify({'username': username, 'password': password})
       })
       .then(response => response.json())
@@ -49,7 +43,7 @@ export default class Worky {
           reject(response['errors'])
           return
         }
-        this.token = response['token']
+        this.headers['Authorization'] = 'JWT ' + response['token']
         this.user = await this.me()
         resolve()
       })
@@ -65,7 +59,7 @@ export default class Worky {
   async me() {
     return new Promise((resolve, reject) => {
       fetch('https://api.worky.mx/api/v1/me/', {
-        'headers': this.headers()
+        'headers': this.headers
       })
       .then(response => response.json())
       .then(response => {
@@ -94,7 +88,7 @@ export default class Worky {
     return new Promise((resolve, reject) => {
       fetch(`https://api.worky.mx/api/v1/time_clock/web/${this.user.employee.id}/checkin/`, {
         'method':'POST',
-        'headers': this.headers(),
+        'headers': this.headers,
         'body': JSON.stringify({'entry_date': date})
       })
       .then(response => response.text())
@@ -121,7 +115,7 @@ export default class Worky {
     return new Promise((resolve, reject) => {
       fetch(`https://api.worky.mx/api/v1/time_clock/web/${this.user.employee.id}/checkout/`, {
         'method':'POST',
-        'headers': this.headers(),
+        'headers': this.headers,
         'body': JSON.stringify({'exit_date': date})
       })
       .then(response => response.text())
