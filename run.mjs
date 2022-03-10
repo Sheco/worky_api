@@ -3,7 +3,7 @@ import minimist from 'minimist'
 import 'dotenv/config'
 
 function usage() {
-  console.error("Usage: node checkin.js [--checkin entry_date] [--checkout exit_date]")
+  console.error("Usage: node run.mjs [--checkin entry_date] [--checkout exit_date]")
   process.exit(1)
 }
 
