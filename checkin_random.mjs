@@ -1,14 +1,14 @@
 import * as child_process from 'child_process'
 import dayjs from 'dayjs'
 
-let today = dayjs()
-today.$H = 8
-today.$m = 59-Math.floor(Math.random()*30)
-let entry_date = today.format("YYYY-MM-DD HH:mm")
+let entry_date = dayjs().hour(9).minute(0)
+  .subtract(Math.random()*30, 'minute')
+  .format('YYYY-MM-DD HH:mm')
 
-today.$H = 17
-today.$m = Math.floor(Math.random()*30)
-let exit_date = today.format("YYYY-MM-DD HH:mm")
+let exit_date = dayjs().hour(17).minute(0)
+  .add(Math.random()*30, 'minute')
+  .format('YYYY-MM-DD HH:mm')
+
 function usage() {
   console.error(`Usage: node checkin_random.js
 The credentials are read from the .env file, for example:
