@@ -20,7 +20,6 @@ PASS=somepass
 }
 
 child_process.fork("run.mjs", [
-  '--envconfig', 
   '--checkin', entry_date, 
   '--checkout', exit_date], {
   'stdio': [
