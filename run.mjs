@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import Worky from './worky.mjs'
 import minimist from 'minimist'
 import 'dotenv/config'

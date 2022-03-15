@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import * as child_process from 'child_process'
 import dayjs from 'dayjs'
 
