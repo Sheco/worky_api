@@ -5,7 +5,25 @@ import 'dotenv/config'
 import dayjs from 'dayjs'
 
 function usage() {
-  console.error("Usage: node run.mjs [--checkin entry_date] [--checkout exit_date]")
+  console.error(`Usage: node run.mjs ARGS
+  ARGS:
+    [--today] Adds today's date to the checkin and checkout times
+    [--checkin entry_date] 
+    [--checkin_early] subtract some random time to the checkin
+    [--checkout exit_date]
+    [--checkout_late] adds some random time to the checkout
+
+    If --today is not specified the --checkin and --checkout dates
+    are absolute (YYYY-MM-DD HH:mm)
+
+    For example: 
+    run.mjs --today --checkin 9:00 --checkout 17:00
+
+    Otherwise, --checkin and --checkout should only specify the time
+
+    For example:
+    run.mjs --checkin '2022-02-22 9:00' --checkout '2022-02-22 17:00'
+  `)
   process.exit(1)
 }
 
@@ -19,11 +37,13 @@ if (!username) {
 }
 
 let dateformat = 'YYYY-MM-DD HH:mm'
+let today = dayjs().format('YYYY-MM-DD ')
+
 const worky = new Worky()
 try {
   await worky.login(username, password)
   if (args.checkin) {
-    let date = args.checkin
+    let date = (args.today? today: '') + args.checkin
 
     if (args.checkin_early) {
       date = dayjs(date)
@@ -35,7 +55,7 @@ try {
   }
 
   if (args.checkout) {
-    let date = args.checkout
+    let date = (args.today? today: '') + args.checkout
     if (args.checkout_late) {
       date = dayjs(date)
         .add(Math.random()*30, 'minute')
