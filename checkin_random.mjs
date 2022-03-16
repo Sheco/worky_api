@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import * as child_process from 'child_process'
+import { fork } from 'child_process'
 
-child_process.fork("run.mjs", [
+fork("run.mjs", [
   '--today',
   '--checkin', '9:00', 
   '--checkin_early',
