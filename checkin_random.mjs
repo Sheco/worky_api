@@ -7,12 +7,5 @@ fork("run.mjs", [
   '--checkin_early',
   '--checkout', '17:00',
   '--checkout_late'
-], {
-  'stdio': [
-    'inherit', 
-    'inherit', 
-    'inherit',
-    'ipc'
-  ]
-})
+])
 
