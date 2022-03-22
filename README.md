@@ -41,9 +41,9 @@ Example run:
 ```
 $ node run.mjs --checkin "2021-10-10 9:00" --checkout "2021-10-10 17:00"
 $ node run.mjs --checkin now
-$ node run.mjs --checkout now
+$ node run.mjs --checkout now --randomize 10
 $ node run.mjs --today --checkin 9:00 --checkout 17:00
-$ node run.mjs --today --randomize --checkin 9:00 --checkout 17:00
+$ node run.mjs --today --checkin 9:00 --checkout 17:00 --randomize 10
 ```
 
 There's also a checkin_random.js script, which is a convenience script for checking in 

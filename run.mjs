@@ -9,7 +9,7 @@ function usage() {
   ARGS:
     [--today] Adds today's date to the checkin and checkout times
     [--checkin entry_date] 
-    [--randomize] add/subtract a random amount of time
+    [--randomize number] add/subtract a random amount of time
     [--checkout exit_date]
 
     If --today is not specified the --checkin and --checkout dates
@@ -38,6 +38,8 @@ if (!username) {
 let dateformat = 'YYYY-MM-DD HH:mm'
 let today = dayjs().format('YYYY-MM-DD ')
 let now = dayjs().format('HH:mm')
+let randomize = args.randomize===true? 10: args.randomize
+let randomAround = (number) => Math.floor(Math.random()*number*2)-number
 
 const worky = new Worky()
 try {
@@ -49,7 +51,7 @@ try {
 
     if (args.randomize) {
       date = dayjs(date)
-        .subtract(Math.random()*30, 'minute')
+        .add(Math.random()*randomAround(randomize), 'minute')
         .format(dateformat)
     }
     console.log(`Checking in at ${date}`)
@@ -63,7 +65,7 @@ try {
 
     if (args.randomize) {
       date = dayjs(date)
-        .add(Math.random()*30, 'minute')
+        .add(Math.random()*randomAround(randomize), 'minute')
         .format(dateformat)
     }
     console.log(`Checking out at ${date}`)
