@@ -20,10 +20,10 @@ nodejs run.mjs [--today] [--checkin entry_date] [--checkout exit_date]
 --checkout: checkout date
 --today: Add today date to --checkin and --checkout
 --checkin_early: subtract some minutes to the checkin time
---checkout_late: ad some minutes to the checkout time
+--checkout_late: add some minutes to the checkout time
 
 If --today is not specified, --checkin and --checkout have to be full 
-time (YYYY-MM-DD HH:mm), and the dates are expected as a single variable 
+time (YYYY-MM-DD HH:mm), and the dates are expected as a single argument 
 so make sure they're quoted.
 If --today is specified, --checkin and --checkout only have to contain 
 the time itself.
