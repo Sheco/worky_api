@@ -38,12 +38,15 @@ if (!username) {
 
 let dateformat = 'YYYY-MM-DD HH:mm'
 let today = dayjs().format('YYYY-MM-DD ')
+let now = dayjs().format('HH:mm')
 
 const worky = new Worky()
 try {
   await worky.login(username, password)
   if (args.checkin) {
-    let date = (args.today? today: '') + args.checkin
+    let date = args.checkin == 'now'?
+      today+now:
+      (args.today? today: '') + args.checkin
 
     if (args.checkin_early) {
       date = dayjs(date)
@@ -55,7 +58,10 @@ try {
   }
 
   if (args.checkout) {
-    let date = (args.today? today: '') + args.checkout
+    let date = args.checkout == 'now'?
+      today+now:
+      (args.today? today: '') + args.checkout
+
     if (args.checkout_late) {
       date = dayjs(date)
         .add(Math.random()*30, 'minute')

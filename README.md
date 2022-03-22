@@ -27,6 +27,7 @@ time (YYYY-MM-DD HH:mm), and the dates are expected as a single argument
 so make sure they're quoted.
 If --today is specified, --checkin and --checkout only have to contain 
 the time itself.
+If --checkin or --checkout are "now", the current time will be used.
 ```
 
 The login credentials are obtained from an `.env` file similar to this:
@@ -39,6 +40,8 @@ Example run:
 
 ```
 $ node run.mjs --checkin "2021-10-10 9:00" --checkout "2021-10-10 17:00"
+$ node run.mjs --checkin now
+$ node run.mjs --checkout now
 $ node run.mjs --today --checkin 9:00 --checkout 17:00
 $ node run.mjs --today --checkin 9:00 --checkin_early --checkout 17:00 --checkout_late
 ```
