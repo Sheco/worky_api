@@ -9,9 +9,8 @@ function usage() {
   ARGS:
     [--today] Adds today's date to the checkin and checkout times
     [--checkin entry_date] 
-    [--checkin_early] subtract some random time to the checkin
+    [--randomize] add/subtract a random amount of time
     [--checkout exit_date]
-    [--checkout_late] adds some random time to the checkout
 
     If --today is not specified the --checkin and --checkout dates
     are absolute (YYYY-MM-DD HH:mm)
@@ -48,7 +47,7 @@ try {
       today+now:
       (args.today? today: '') + args.checkin
 
-    if (args.checkin_early) {
+    if (args.randomize) {
       date = dayjs(date)
         .subtract(Math.random()*30, 'minute')
         .format(dateformat)
@@ -62,7 +61,7 @@ try {
       today+now:
       (args.today? today: '') + args.checkout
 
-    if (args.checkout_late) {
+    if (args.randomize) {
       date = dayjs(date)
         .add(Math.random()*30, 'minute')
         .format(dateformat)
