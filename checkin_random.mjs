@@ -5,6 +5,6 @@ fork("run.mjs", [
   '--today',
   '--checkin', '9:00', 
   '--checkout', '17:00',
-  '--random', '10',
+  '--randomize', '10',
 ])
 
