@@ -15,6 +15,7 @@ function usage() {
     the date will be set to today.
 
     For example: 
+    run.mjs --checkin
     run.mjs --checkin 9:00 --checkout 17:00
     run.mjs --checkin '2022-02-22 9:00' --checkout '2022-02-22 17:00'
   `)
@@ -40,7 +41,7 @@ const worky = new Worky()
 try {
   await worky.login(username, password)
   if (args.checkin) {
-    let date = args.checkin == 'now'?
+    let date = args.checkin === true?
       today+now:
       (args.checkin.length<6? today: '') + args.checkin
 
@@ -54,7 +55,7 @@ try {
   }
 
   if (args.checkout) {
-    let date = args.checkout == 'now'?
+    let date = args.checkout === true?
       today+now:
       (args.checkout.length<6? today: '') + args.checkout
 
