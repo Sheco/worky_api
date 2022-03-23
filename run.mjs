@@ -7,20 +7,15 @@ import dayjs from 'dayjs'
 function usage() {
   console.error(`Usage: node run.mjs ARGS
   ARGS:
-    [--today] Adds today's date to the checkin and checkout times
-    [--checkin entry_date] 
+    [--checkin [YYYY-MM-DD ]HH:mm] 
     [--randomize number] add/subtract a random amount of time
-    [--checkout exit_date]
+    [--checkout [YYYY-MM-DD ]HH:mm]
 
-    If --today is not specified the --checkin and --checkout dates
-    are absolute (YYYY-MM-DD HH:mm)
+    If --checkin and --checkout dates only specify the time,
+    the date will be set to today.
 
     For example: 
-    run.mjs --today --checkin 9:00 --checkout 17:00
-
-    Otherwise, --checkin and --checkout should only specify the time
-
-    For example:
+    run.mjs --checkin 9:00 --checkout 17:00
     run.mjs --checkin '2022-02-22 9:00' --checkout '2022-02-22 17:00'
   `)
   process.exit(1)
@@ -47,7 +42,7 @@ try {
   if (args.checkin) {
     let date = args.checkin == 'now'?
       today+now:
-      (args.today? today: '') + args.checkin
+      (args.checkin.length<6? today: '') + args.checkin
 
     if (args.randomize) {
       date = dayjs(date)
@@ -61,7 +56,7 @@ try {
   if (args.checkout) {
     let date = args.checkout == 'now'?
       today+now:
-      (args.today? today: '') + args.checkout
+      (args.checkout.length<6? today: '') + args.checkout
 
     if (args.randomize) {
       date = dayjs(date)

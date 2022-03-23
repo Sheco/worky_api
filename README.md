@@ -18,14 +18,11 @@ The run.mjs script's signature is:
 nodejs run.mjs [--today] [--checkin entry_date] [--checkout exit_date]
 --checkin: checkin date
 --checkout: checkout date
---today: Add today date to --checkin and --checkout
 --now: use current time
 --randomize: add/subtract a random amount of time
 
-If --today is not specified, --checkin and --checkout have to be full 
-time (YYYY-MM-DD HH:mm), and the dates are expected as a single argument 
-so make sure they're quoted.
-If --today is specified, --checkin and --checkout only have to contain 
+If --checkin and --checkout dates only specify the time, the date will be set to today.
+The dates are expected as a single argument so make sure they're quoted.
 the time itself.
 If --checkin or --checkout are "now", the current time will be used.
 ```
