@@ -34,8 +34,8 @@ if (!username) {
 let dateformat = 'YYYY-MM-DD HH:mm'
 let today = dayjs().format('YYYY-MM-DD ')
 let now = dayjs().format('HH:mm')
-let randomize = args.randomize===true? 10: args.randomize
-let randomAround = (number) => Math.floor(Math.random()*number*2)-number
+let randomizeAmount = args.randomize===true? 10: args.randomize
+let random = () => Math.floor(Math.random()*randomizeAmount)
 
 const worky = new Worky()
 try {
@@ -47,7 +47,7 @@ try {
 
     if (args.randomize) {
       date = dayjs(date)
-        .add(Math.random()*randomAround(randomize), 'minute')
+        .subtract(random(), 'minute')
         .format(dateformat)
     }
     console.log(`Checking in at ${date}`)
@@ -61,7 +61,7 @@ try {
 
     if (args.randomize) {
       date = dayjs(date)
-        .add(Math.random()*randomAround(randomize), 'minute')
+        .add(random(), 'minute')
         .format(dateformat)
     }
     console.log(`Checking out at ${date}`)
