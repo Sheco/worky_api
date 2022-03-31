@@ -35,10 +35,15 @@ PASS=somepass
 Example run:
 
 ```
+# to check-in and out at specific dates
 $ node run.mjs --checkin "2021-10-10 9:00" --checkout "2021-10-10 17:00"
+# to check-in right now
 $ node run.mjs --checkin
+# to checkout now, but add some random minutes.
 $ node run.mjs --checkout --randomize 10
+# to checkin today at 9am and checkout at 5pm
 $ node run.mjs --checkin 9:00 --checkout 17:00
+# to checkin today at 9am and checkout at 5pm but subtract/add some minutes
 $ node run.mjs --checkin 9:00 --checkout 17:00 --randomize 10
 ```
 
