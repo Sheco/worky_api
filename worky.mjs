@@ -44,6 +44,7 @@ export default class Worky {
 
     this.headers['Authorization'] = 'JWT ' + response['token']
     this.user = await this.me()
+    this.timework = await this.status_timework()
   }
 
   /* the me endpoint returns a json object with all of the user info
@@ -64,6 +65,19 @@ export default class Worky {
     return response
   }
 
+  async status_timework() {
+    let response = await fetch('https://api.worky.mx/api/v1/status_timework/me/?timezone=America/Mexico_City', {
+      'headers': this.headers
+    })
+
+    response = await response.json()
+
+    if(response.errors !== undefined) {
+      throw response.errors
+    }
+
+    return response
+  }
 
   /* the checkin endpoint expects the employee id in the URL
    *
@@ -72,11 +86,16 @@ export default class Worky {
    * On success, it returns an empty string
    * On error, it returns a json object with an error item
    */
-  async checkin(date) {
-    let response = await fetch(`https://api.worky.mx/api/v1/time_clock/web/${this.user.employee.id}/checkin/`, {
+  async checkin() {
+    let shift_id = this.timework.current_shift.id
+    let response = await fetch(`https://api.worky.mx/api/v1/register/${shift_id}/checkin/`, {
       'method':'POST',
       'headers': this.headers,
-      'body': JSON.stringify({'entry_date': date})
+      'body': JSON.stringify({
+        'register_kind_start': 'web',
+        'latitude_end': null,
+        'longitude_end': null,
+      })
     })
 
     response = await response.text()
@@ -93,11 +112,16 @@ export default class Worky {
    * On success, it returns an empty string
    * On error, it returns a json object with an error item
    */
-  async checkout(date) {
-    let response = await fetch(`https://api.worky.mx/api/v1/time_clock/web/${this.user.employee.id}/checkout/`, {
+  async checkout() {
+    let shift_id = this.timework.current_shift.id
+    let response = await fetch(`https://api.worky.mx/api/v1/register/${shift_id}/checkout/`, {
       'method':'POST',
       'headers': this.headers,
-      'body': JSON.stringify({'entry_date': date})
+      'body': JSON.stringify({
+        'register_kind_end': 'web',
+        'latitude_end': null,
+        'longitude_end': null,
+      })
     })
 
     response = await response.text()

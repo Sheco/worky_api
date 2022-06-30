@@ -31,41 +31,18 @@ if (!username) {
   usage() 
 }
 
-let dateformat = 'YYYY-MM-DD HH:mm'
-let today = dayjs().format('YYYY-MM-DD ')
-let now = dayjs().format('HH:mm')
-let randomizeAmount = args.randomize===true? 10: args.randomize
-let random = () => Math.floor(Math.random()*randomizeAmount)
-
 const worky = new Worky()
 try {
   await worky.login(username, password)
-  if (args.checkin) {
-    let date = args.checkin === true?
-      today+now:
-      (args.checkin.length<6? today: '') + args.checkin
 
-    if (args.randomize) {
-      date = dayjs(date)
-        .subtract(random(), 'minute')
-        .format(dateformat)
-    }
-    console.log(`Checking in at ${date}`)
-    await worky.checkin(date)
+  if (args.checkin) {
+    console.log(`Checking in`)
+    await worky.checkin()
   }
 
   if (args.checkout) {
-    let date = args.checkout === true?
-      today+now:
-      (args.checkout.length<6? today: '') + args.checkout
-
-    if (args.randomize) {
-      date = dayjs(date)
-        .add(random(), 'minute')
-        .format(dateformat)
-    }
-    console.log(`Checking out at ${date}`)
-    await worky.checkout(date)
+    console.log(`Checking out`)
+    await worky.checkout()
   }
   process.exit(0)
 } catch (errors) {
