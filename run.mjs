@@ -7,17 +7,8 @@ import dayjs from 'dayjs'
 function usage() {
   console.error(`Usage: node run.mjs ARGS
   ARGS:
-    [--checkin [YYYY-MM-DD ]HH:mm] 
-    [--randomize number] add/subtract a random amount of time
-    [--checkout [YYYY-MM-DD ]HH:mm]
-
-    If --checkin and --checkout dates only specify the time,
-    the date will be set to today.
-
-    For example: 
-    run.mjs --checkin
-    run.mjs --checkin 9:00 --checkout 17:00
-    run.mjs --checkin '2022-02-22 9:00' --checkout '2022-02-22 17:00'
+    [--checkin] 
+    [--checkout]
   `)
   process.exit(1)
 }
