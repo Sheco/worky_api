@@ -31,24 +31,19 @@ export default class Worky {
    * future us in the other api calls
    */
   async login(username, password) {
-    return new Promise((resolve, reject) => {
-      fetch("https://api.worky.mx/token/", {
-        'method':'POST',
-        'headers': this.headers,
-        'body': JSON.stringify({'username': username, 'password': password})
-      })
-      .then(response => response.json())
-      .then(async response => {
-        if(response['errors'] !== undefined) {
-          reject(response['errors'])
-          return
-        }
-        this.headers['Authorization'] = 'JWT ' + response['token']
-        this.user = await this.me()
-        resolve()
-      })
-      .catch(response => reject(response))
+    let response = await fetch("https://api.worky.mx/token/", {
+      'method':'POST',
+      'headers': this.headers,
+      'body': JSON.stringify({'username': username, 'password': password})
     })
+
+    response = await response.json()
+    if(response.errors !== undefined) {
+      throw response.errors
+    }
+
+    this.headers['Authorization'] = 'JWT ' + response['token']
+    this.user = await this.me()
   }
 
   /* the me endpoint returns a json object with all of the user info
@@ -57,23 +52,16 @@ export default class Worky {
    * on error, it returns an json object with an error item
    */
   async me() {
-    return new Promise((resolve, reject) => {
-      fetch('https://api.worky.mx/api/v1/me/', {
-        'headers': this.headers
-      })
-      .then(response => response.json())
-      .then(response => {
-        if(response['errors'] !== undefined) {
-          reject(response['errors'])
-          return
-        }
-        resolve(response)
-      })
-      .catch(error => {
-        reject(error)
-      })
-      
+    let response = await fetch('https://api.worky.mx/api/v1/me/', {
+      'headers': this.headers
     })
+
+    response = await response.json()
+    if(response.errors !== undefined) {
+      throw response.errors
+    }
+
+    return response
   }
 
 
@@ -85,23 +73,17 @@ export default class Worky {
    * On error, it returns a json object with an error item
    */
   async checkin(date) {
-    return new Promise((resolve, reject) => {
-      fetch(`https://api.worky.mx/api/v1/time_clock/web/${this.user.employee.id}/checkin/`, {
-        'method':'POST',
-        'headers': this.headers,
-        'body': JSON.stringify({'entry_date': date})
-      })
-      .then(response => response.text())
-      .then(response => {
-        if (response !== "") {
-          response = JSON.parse(response)
-          reject(response.errors)
-          return
-        }
-        resolve(response)
-      })
-      .catch(error => reject(error))
+    let response = await fetch(`https://api.worky.mx/api/v1/time_clock/web/${this.user.employee.id}/checkin/`, {
+      'method':'POST',
+      'headers': this.headers,
+      'body': JSON.stringify({'entry_date': date})
     })
+
+    response = await response.text()
+    if (response !== "") {
+      response = JSON.parse(response)
+      throw response
+    }
   }
 
   /* the checkout endpoint expects the employee id in the URL
@@ -112,22 +94,16 @@ export default class Worky {
    * On error, it returns a json object with an error item
    */
   async checkout(date) {
-    return new Promise((resolve, reject) => {
-      fetch(`https://api.worky.mx/api/v1/time_clock/web/${this.user.employee.id}/checkout/`, {
-        'method':'POST',
-        'headers': this.headers,
-        'body': JSON.stringify({'exit_date': date})
-      })
-      .then(response => response.text())
-      .then(response => {
-        if (response !== "") {
-          response = JSON.parse(response)
-          reject(response.errors)
-          return
-        }
-        resolve(response)
-      })
-      .catch(error => reject(error))
+    let response = await fetch(`https://api.worky.mx/api/v1/time_clock/web/${this.user.employee.id}/checkout/`, {
+      'method':'POST',
+      'headers': this.headers,
+      'body': JSON.stringify({'entry_date': date})
     })
+
+    response = await response.text()
+    if (response !== "") {
+      response = JSON.parse(response)
+      throw response
+    }
   }
 }
