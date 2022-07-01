@@ -2,7 +2,7 @@
 
 This code is for educational purposes only.
 
-The intention is to show how to checkin/checkout programatically, sending crafted entry and exit dates.
+The intention is to show how to checkin/checkout programatically.
 
 ### Installation
 
