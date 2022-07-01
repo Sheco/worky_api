@@ -26,6 +26,10 @@ const worky = new Worky()
 try {
   await worky.login(username, password)
 
+  if (args.timework) {
+    console.log(worky.timework)
+  }
+
   if (args.checkin) {
     console.log(`Checking in`)
     let response = await worky.checkin()
