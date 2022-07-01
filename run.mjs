@@ -28,12 +28,14 @@ try {
 
   if (args.checkin) {
     console.log(`Checking in`)
-    await worky.checkin()
+    let response = await worky.checkin()
+    console.log(response)
   }
 
   if (args.checkout) {
     console.log(`Checking out`)
-    await worky.checkout()
+    let response = await worky.checkout()
+    console.log(response)
   }
   process.exit(0)
 } catch (errors) {
