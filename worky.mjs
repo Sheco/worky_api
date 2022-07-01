@@ -57,12 +57,7 @@ export default class Worky {
       'headers': this.headers
     })
 
-    response = await response.json()
-    if(response.errors !== undefined) {
-      throw response.errors
-    }
-
-    return response
+    return response.json()
   }
 
   async status_timework() {
@@ -70,13 +65,7 @@ export default class Worky {
       'headers': this.headers
     })
 
-    response = await response.json()
-
-    if(response.errors !== undefined) {
-      throw response.errors
-    }
-
-    return response
+    return response.json()
   }
 
   /* the checkin endpoint expects the employee id in the URL
@@ -98,11 +87,7 @@ export default class Worky {
       })
     })
 
-    response = await response.text()
-    if (response !== "") {
-      response = JSON.parse(response)
-      throw response
-    }
+    return response.json()
   }
 
   /* the checkout endpoint expects the employee id in the URL
@@ -124,10 +109,6 @@ export default class Worky {
       })
     })
 
-    response = await response.text()
-    if (response !== "") {
-      response = JSON.parse(response)
-      throw response
-    }
+    return response.json()
   }
 }
