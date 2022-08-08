@@ -48,7 +48,6 @@ export default class Worky {
   async startSession(token) {
     this.headers['Authorization'] = 'JWT ' + token.trim()
     this.user = await this.me()
-    this.timework = await this.status_timework()
     return token
   }
 
@@ -96,8 +95,8 @@ export default class Worky {
    * On success, it returns an empty string
    * On error, it returns a json object with an error item
    */
-  async checkin() {
-    let shift_id = this.timework.next_shift.id
+  async checkin(timework) {
+    let shift_id = timework.next_shift.id
     let response = await fetch(`https://api.worky.mx/api/v1/register/${shift_id}/checkin/`, {
       'method':'POST',
       'headers': this.headers,
@@ -118,8 +117,8 @@ export default class Worky {
    * On success, it returns an empty string
    * On error, it returns a json object with an error item
    */
-  async checkout() {
-    let shift_id = this.timework.current_shift.id
+  async checkout(timework) {
+    let shift_id = timework.current_shift.id
     let response = await fetch(`https://api.worky.mx/api/v1/register/${shift_id}/checkout/`, {
       'method':'POST',
       'headers': this.headers,

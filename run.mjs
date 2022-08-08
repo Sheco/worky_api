@@ -37,18 +37,20 @@ try {
   await writeFile(tokenFile, token)
 
   if (args.timework) {
-    console.log(worky.timework)
+    console.log(await worky.status_timework())
   }
 
   if (args.checkin) {
     console.log(`Checking in`)
-    let response = await worky.checkin()
+    let timework = await worky.status_timework()
+    let response = await worky.checkin(timework)
     console.log(response)
   }
 
   if (args.checkout) {
     console.log(`Checking out`)
-    let response = await worky.checkout()
+    let timework = await worky.status_timework()
+    let response = await worky.checkout(timework)
     console.log(response)
   }
   process.exit(0)
