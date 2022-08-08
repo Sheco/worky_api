@@ -54,10 +54,10 @@ export default class Worky {
   async loadOrLogin(token, username, password) {
     try {
       if (!token) throw 'Login instead'
-      console.log('Using token')
+      console.error('Using token')
       return await this.startSession(token)
     } catch (errors) {
-      console.log('Logging in')
+      console.error('Logging in')
       return await this.login(username, password)
     }
   }
