@@ -36,8 +36,6 @@ try {
   token = await worky.loadOrLogin(token, username, password)
   await writeFile(tokenFile, token)
 
-  await worky.login(username, password)
-
   if (args.timework) {
     console.log(worky.timework)
   }
