@@ -42,10 +42,27 @@ export default class Worky {
       throw response.errors
     }
 
-    this.headers['Authorization'] = 'JWT ' + response['token']
+    return this.startSession(response['token'])
+  }
+
+  async startSession(token) {
+    this.headers['Authorization'] = 'JWT ' + token.trim()
     this.user = await this.me()
     this.timework = await this.status_timework()
+    return token
   }
+
+  async loadOrLogin(token, username, password) {
+    try {
+      if (!token) throw 'Login instead'
+      console.log('Using token')
+      return await this.startSession(token)
+    } catch (errors) {
+      console.log('Logging in')
+      return await this.login(username, password)
+    }
+  }
+  
 
   /* the me endpoint returns a json object with all of the user info
    * this includes the employee id and some other stuff
@@ -65,7 +82,11 @@ export default class Worky {
       'headers': this.headers
     })
 
-    return response.json()
+    let json = await response.json()
+    if (json['errors']) {
+      throw json['errors']
+    }
+    return json
   }
 
   /* the checkin endpoint expects the employee id in the URL

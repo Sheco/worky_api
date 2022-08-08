@@ -2,6 +2,7 @@
 import Worky from './worky.mjs'
 import minimist from 'minimist'
 import 'dotenv/config'
+import { readFile, writeFile } from 'fs/promises'
 import dayjs from 'dayjs'
 
 function usage() {
@@ -17,6 +18,7 @@ var args = minimist(process.argv.slice(2));
 
 const username = process.env.WORKY_USER
 const password = process.env.WORKY_PASS
+const tokenFile = process.env.TOKEN_FILE
 
 if (!username) {
   usage() 
@@ -24,6 +26,16 @@ if (!username) {
 
 const worky = new Worky()
 try {
+  let token;
+  
+  if (tokenFile) {
+    try {
+      token = await readFile(tokenFile, {encoding: 'utf8'})
+    } catch(err) { }
+  }
+  token = await worky.loadOrLogin(token, username, password)
+  await writeFile(tokenFile, token)
+
   await worky.login(username, password)
 
   if (args.timework) {
