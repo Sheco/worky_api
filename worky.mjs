@@ -96,7 +96,7 @@ export default class Worky {
    * On error, it returns a json object with an error item
    */
   async checkin(timework) {
-    let shift_id = timework.next_shift.id
+    let shift_id = timework.current_shift.id
     let response = await fetch(`https://api.worky.mx/api/v1/register/${shift_id}/checkin/`, {
       'method':'POST',
       'headers': this.headers,
