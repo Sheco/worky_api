@@ -73,7 +73,11 @@ export default class Worky {
       'headers': this.headers
     })
 
-    return response.json()
+    let json = await response.json()
+    if (json['errors']) {
+      throw json['errors']
+    }
+    return json
   }
 
   async status_timework() {
