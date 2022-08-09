@@ -10,6 +10,7 @@ function usage() {
   ARGS:
     [--checkin] 
     [--checkout]
+    [--tokenFile {filename}]
   `)
   process.exit(1)
 }
@@ -18,7 +19,7 @@ var args = minimist(process.argv.slice(2));
 
 const username = process.env.WORKY_USER
 const password = process.env.WORKY_PASS
-const tokenFile = process.env.TOKEN_FILE
+const tokenFile = process.env.TOKEN_FILE || ".token"
 
 if (!username) {
   usage() 
