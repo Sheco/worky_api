@@ -57,5 +57,8 @@ try {
   process.exit(0)
 } catch (errors) {
   console.error('ERROR', errors)
+  for (let err of errors) {
+    console.log(err)
+  }
   process.exit(1)
 }
