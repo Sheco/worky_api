@@ -111,7 +111,11 @@ export default class Worky {
       })
     })
 
-    return response.json()
+    let json = await response.json()
+    if (json['errors']) {
+      throw json['errors']
+    }
+    return json
   }
 
   /* the checkout endpoint expects the employee id in the URL
@@ -133,6 +137,10 @@ export default class Worky {
       })
     })
 
-    return response.json()
+    let json = await response.json()
+    if (json['errors']) {
+      throw json['errors']
+    }
+    return json
   }
 }
