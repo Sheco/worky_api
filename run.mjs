@@ -10,10 +10,10 @@ dayjs.extend(customParseFormat)
 function usage() {
   console.error(`Usage: node run.mjs ARGS
   ARGS:
-    [--checkin] 
-    [--checkout]
-    [--tokenFile {filename}]
     [--report] Shows a status report
+    [--checkin] Executes a check-in
+    [--checkout] Executes a check-out
+    [--tokenFile {filename}] file where the token is stored
   `)
   process.exit(1)
 }
