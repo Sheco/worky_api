@@ -4,6 +4,8 @@ import minimist from 'minimist'
 import 'dotenv/config'
 import { readFile, writeFile } from 'fs/promises'
 import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat.js'
+dayjs.extend(customParseFormat)
 
 function usage() {
   console.error(`Usage: node run.mjs ARGS
@@ -11,6 +13,7 @@ function usage() {
     [--checkin] 
     [--checkout]
     [--tokenFile {filename}]
+    [--report] Shows a status report
   `)
   process.exit(1)
 }
@@ -39,6 +42,24 @@ try {
 
   if (args.timework) {
     console.log(await worky.status_timework())
+  }
+
+  if (args.report) {
+    let tw = await worky.status_timework()
+    if (tw.can_check_next_shift) {
+      let checkin_date = dayjs(tw.next_shift.start_time, 'HH:mm:ss')
+      let minutesToCheckin = Math.round((checkin_date-dayjs())/60/1000)
+      console.log(`You need to checkin in less than ${minutesToCheckin} minutes`)
+    }
+
+    if (tw.current_shift.start_time) {
+      let checkout_date = dayjs(tw.current_shift.end_time, "HH:mm:ss")
+      let minutesToCheckout = Math.round((checkout_date-dayjs())/60/1000)
+      let hours = Math.floor(minutesToCheckout/60)
+      let mins = minutesToCheckout%60
+      console.log(`You still have to work ${hours} hours and ${mins} minutes`)
+
+    }
   }
 
   if (args.checkin) {
