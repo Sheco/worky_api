@@ -100,7 +100,11 @@ export default class Worky {
    * On error, it returns a json object with an error item
    */
   async checkin(timework) {
-    let shift_id = timework.next_shift.id
+    // if we're early, we'll check-in using the next shift
+    // but if we're late we have to check-in using the current shift
+    let shift_id = timework.can_check_next_shift? 
+      timework.next_shift.id: 
+      timework.current_shift.id
     let response = await fetch(`https://api.worky.mx/api/v1/register/${shift_id}/checkin/`, {
       'method':'POST',
       'headers': this.headers,
