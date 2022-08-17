@@ -5,7 +5,9 @@ import 'dotenv/config'
 import { readFile, writeFile } from 'fs/promises'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat.js'
+import relativeTime from 'dayjs/plugin/relativeTime.js'
 dayjs.extend(customParseFormat)
+dayjs.extend(relativeTime)
 
 function usage() {
   console.error(`Usage: node run.mjs ARGS
@@ -46,18 +48,24 @@ try {
 
   if (args.report) {
     let tw = await worky.status_timework()
+    let checkin_date = dayjs(tw.next_shift.start_time, 'HH:mm:ss')
+    let checkout_date = dayjs(tw.current_shift.end_time, "HH:mm:ss")
     if (tw.can_check_next_shift) {
-      let checkin_date = dayjs(tw.next_shift.start_time, 'HH:mm:ss')
-      let minutesToCheckin = Math.round((checkin_date-dayjs())/60/1000)
-      console.log(`You need to checkin in less than ${minutesToCheckin} minutes`)
+      let relative = checkin_date.fromNow()
+      console.log(`ETA Checkin: ${relative}`)
+    } else if (tw.current_shift.start_time && !tw.record) {
+      let relative = checkin_date.fromNow()
+      console.log(`Expected checkin: ${relative} (${tw.entry_tolerance} is ok)`)
     }
 
-    if (tw.current_shift.start_time) {
-      let checkout_date = dayjs(tw.current_shift.end_time, "HH:mm:ss")
+    if (tw.current_shift.start_time && tw.record) {
       let minutesToCheckout = Math.round((checkout_date-dayjs())/60/1000)
-      let hours = Math.floor(minutesToCheckout/60)
-      let mins = minutesToCheckout%60
-      console.log(`You still have to work ${hours} hours and ${mins} minutes`)
+      if (minutesToCheckout > 0) {
+        let relative = checkout_date.fromNow()
+        console.log(`ETA Checkout: ${relative}`)
+      } else {
+        console.log('Checkout now')
+      }
 
     }
   }
