@@ -73,15 +73,15 @@ try {
   if (args.checkin) {
     console.log(`Checking in`)
     let timework = await worky.status_timework()
-    let response = await worky.checkin(timework)
-    console.log(response)
+    await worky.checkin(timework)
+    console.log('Ok')
   }
 
   if (args.checkout) {
     console.log(`Checking out`)
     let timework = await worky.status_timework()
-    let response = await worky.checkout(timework)
-    console.log(response)
+    await worky.checkout(timework)
+    console.log('Ok')
   }
   process.exit(0)
 } catch (errors) {
