@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import Worky from './worky.mjs'
+import Worky from './api.mjs'
 import minimist from 'minimist'
 import 'dotenv/config'
 import { readFile, writeFile } from 'fs/promises'
@@ -10,7 +10,7 @@ dayjs.extend(customParseFormat)
 dayjs.extend(relativeTime)
 
 function usage() {
-  console.error(`Usage: node run.mjs ARGS
+  console.error(`Usage: node worky.mjs ARGS
   ARGS:
     [--report] Shows a status report
     [--checkin] Executes a check-in
