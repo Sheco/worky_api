@@ -16,7 +16,16 @@ function usage() {
     [checkin] Executes a check-in
     [checkout] Executes a check-out
     [--tokenFile {filename}] file where the token is stored
-  `)
+
+This script expects an .env file in the current directory, this file 
+should contain the Worky credentials like this:
+
+WORKY_USER=email@company
+WORKY_PASS=plain_text_password
+
+By default the authentication token is saved to a file called .token
+in the current directory.
+`)
   process.exit(1)
 }
 
@@ -27,7 +36,7 @@ const username = process.env.WORKY_USER
 const password = process.env.WORKY_PASS
 const tokenFile = process.env.TOKEN_FILE || ".token"
 
-if (!username) {
+if (!username || commands.length == 0) {
   usage() 
 }
 
