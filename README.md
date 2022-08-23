@@ -17,12 +17,13 @@ Requirements: Nodejs 14
 The run.mjs script's signature is:
 
 ```
-nodejs run.mjs COMMANDS
+nodejs run.mjs [ARGS] COMMANDS
+args:
+  [--tokenFile {path}] path for the authentication token file.
 commands:
   checkin: checkin now
   checkout: checkout now
   report: quick status report
-  [--tokenFile {path}] path for the authentication token file.
 ```
 
 The login credentials are obtained from an `.env` file similar to this:
