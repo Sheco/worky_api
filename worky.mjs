@@ -40,8 +40,10 @@ try {
       token = await readFile(tokenFile, {encoding: 'utf8'})
     } catch(err) { }
   }
-  token = await worky.loadOrLogin(token, username, password)
-  await writeFile(tokenFile, token)
+  let newtoken = await worky.loadOrLogin(token, username, password)
+  if (token != newtoken) {
+    await writeFile(tokenFile, newtoken)
+  }
 
   if (args.timework) {
     console.log(await worky.status_timework())
