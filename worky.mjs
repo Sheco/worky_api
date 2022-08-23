@@ -12,9 +12,9 @@ dayjs.extend(relativeTime)
 function usage() {
   console.error(`Usage: node worky.mjs ARGS
   ARGS:
-    [--report] Shows a status report
-    [--checkin] Executes a check-in
-    [--checkout] Executes a check-out
+    [report] Shows a status report
+    [checkin] Executes a check-in
+    [checkout] Executes a check-out
     [--tokenFile {filename}] file where the token is stored
   `)
   process.exit(1)
@@ -22,6 +22,7 @@ function usage() {
 
 var args = minimist(process.argv.slice(2));
 
+const commands = args._
 const username = process.env.WORKY_USER
 const password = process.env.WORKY_PASS
 const tokenFile = process.env.TOKEN_FILE || ".token"
@@ -46,42 +47,47 @@ try {
     console.log(await worky.status_timework())
   }
 
-  if (args.report) {
-    let tw = await worky.status_timework()
-    let checkin_date = dayjs(tw.next_shift.start_time, 'HH:mm:ss')
-    let checkout_date = dayjs(tw.current_shift.end_time, "HH:mm:ss")
-    if (tw.can_check_next_shift) {
-      let relative = checkin_date.fromNow()
-      console.log(`ETA Checkin: ${relative}`)
-    } else if (tw.current_shift.start_time && !tw.record) {
-      let relative = checkin_date.fromNow()
-      console.log(`Expected checkin: ${relative} (${tw.entry_tolerance} is ok)`)
-    }
+  while(commands.length > 0) {
+    let command = commands.shift()
 
-    if (tw.current_shift.start_time && tw.record) {
-      let minutesToCheckout = Math.round((checkout_date-dayjs())/60/1000)
-      if (minutesToCheckout > 0) {
-        let relative = checkout_date.fromNow()
-        console.log(`ETA Checkout: ${relative}`)
+    if (command === 'report') {
+      let tw = await worky.status_timework()
+      let checkin_date = dayjs(tw.next_shift.start_time, 'HH:mm:ss')
+      let checkout_date = dayjs(tw.current_shift.end_time, "HH:mm:ss")
+      if (tw.can_check_next_shift) {
+        let relative = checkin_date.fromNow()
+        console.log(`ETA Checkin: ${relative}`)
+      } else if (tw.current_shift.start_time && !tw.record) {
+        let relative = checkin_date.fromNow()
+        console.log(`Expected checkin: ${relative} (${tw.entry_tolerance} is ok)`)
+      } else if (tw.current_shift.start_time && tw.record) {
+        let minutesToCheckout = Math.round((checkout_date-dayjs())/60/1000)
+        if (minutesToCheckout > 0) {
+          let relative = checkout_date.fromNow()
+          console.log(`ETA Checkout: ${relative}`)
+        } else {
+          console.log('Checkout now')
+        }
+
       } else {
-        console.log('Checkout now')
+        console.log(`'It looks you're good for now`)
       }
 
     }
-  }
 
-  if (args.checkin) {
-    console.log(`Checking in`)
-    let timework = await worky.status_timework()
-    await worky.checkin(timework)
-    console.log('Ok')
-  }
+    if (command === 'checkin') {
+      console.log(`Checking in`)
+      let timework = await worky.status_timework()
+      await worky.checkin(timework)
+      console.log('Ok')
+    }
 
-  if (args.checkout) {
-    console.log(`Checking out`)
-    let timework = await worky.status_timework()
-    await worky.checkout(timework)
-    console.log('Ok')
+    if (command === 'checkout') {
+      console.log(`Checking out`)
+      let timework = await worky.status_timework()
+      await worky.checkout(timework)
+      console.log('Ok')
+    }
   }
   process.exit(0)
 } catch (errors) {
