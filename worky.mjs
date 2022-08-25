@@ -69,19 +69,18 @@ try {
     if (command === 'report') {
       let checkin_date = dayjs(timework.next_shift.start_time, 'HH:mm:ss')
       let checkout_date = dayjs(timework.current_shift.end_time, "HH:mm:ss")
+      let relative_checkin = checkin_date.fromNow()
       if (timework.can_check_next_shift) {
-        let relative = checkin_date.fromNow()
-        console.log(`ETA Checkin: ${relative}`)
+        console.log(`Checkin in: ${relative_checkin}`)
       } else if (timework.current_shift.start_time && !timework.record) {
-        let relative = checkin_date.fromNow()
-        console.log(`Expected checkin: ${relative} (${timework.entry_tolerance} is ok)`)
+        console.log(`Expected checkin: ${relative_checkin} (${timework.entry_tolerance} is ok)`)
       } else if (timework.current_shift.start_time && timework.record) {
         let minutesToCheckout = Math.round((checkout_date-dayjs())/60/1000)
+        let relative_checkout = checkout_date.fromNow()
         if (minutesToCheckout > 0) {
-          let relative = checkout_date.fromNow()
-          console.log(`ETA Checkout: ${relative}`)
+          console.log(`Checkout in ${relative_checkout}`)
         } else {
-          console.log('Checkout now')
+          console.log(`Should have checked out ${relative_checkout}`)
         }
 
       } else {
