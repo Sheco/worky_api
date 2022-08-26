@@ -1,8 +1,10 @@
-## Proof of concept to programatically checkin/checkout on worky
+## API to connect and interact with Worky
 
 This code is for educational purposes only.
 
-The intention is to show how to checkin/checkout programatically.
+Currently the only supported actions are login, checkin and checkout.
+
+There is an extra `report` action that fetches the time work information and outputs a simple report of what needs to be done, for example: estimated time before the checkin deadline and how long more you have to continue working.
 
 ### Installation
 
@@ -15,14 +17,18 @@ Requirements: Nodejs 14
 The run.mjs script's signature is:
 
 ```
-nodejs run.mjs [--checkin] [--checkout]
---checkin: checkin now
---checkout: checkout now
+nodejs run.mjs [ARGS] COMMANDS
+args:
+  [--tokenFile {path}] path for the authentication token file.
+commands:
+  checkin: checkin now
+  checkout: checkout now
+  report: quick status report
 ```
 
 The login credentials are obtained from an `.env` file similar to this:
 ```
-USER=someuser@company.com
-PASS=somepass
+WORKY_USER=someuser@company.com
+WORKY_PASS=somepass
 ```
 
