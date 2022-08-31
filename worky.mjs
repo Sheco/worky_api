@@ -94,13 +94,13 @@ try {
 
     if (command === 'checkin') {
       console.log(`Checking in`)
-      await worky.checkin(timework)
+      timework = await worky.checkin(timework)
       console.log('Ok')
     }
 
     if (command === 'checkout') {
       console.log(`Checking out`)
-      await worky.checkout(timework)
+      timework = await worky.checkout(timework)
       console.log('Ok')
     }
   }
