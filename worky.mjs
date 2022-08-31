@@ -48,7 +48,7 @@ async function login() {
     } catch(err) { }
   }
   let newtoken = await worky.loadOrLogin(token, username, password)
-  if (token != newtoken) {
+  if (tokenFile && token != newtoken) {
     await writeFile(tokenFile, newtoken)
   }
 }
