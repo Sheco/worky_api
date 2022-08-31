@@ -40,10 +40,8 @@ if (!username || commands.length == 0) {
   usage() 
 }
 
-const worky = new Worky()
-try {
-  let token;
-  
+async function login() {
+  let token
   if (tokenFile) {
     try {
       token = await readFile(tokenFile, {encoding: 'utf8'})
@@ -53,7 +51,12 @@ try {
   if (token != newtoken) {
     await writeFile(tokenFile, newtoken)
   }
+}
 
+const worky = new Worky()
+try {
+  await login();
+  
   if (args.timework) {
     console.log(await worky.status_timework())
   }
