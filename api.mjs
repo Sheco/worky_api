@@ -37,9 +37,9 @@ export default class Worky {
       'body': JSON.stringify({'username': username, 'password': password})
     })
 
-    response = await response.json()
-    if(response.errors !== undefined) {
-      throw response.errors
+    json = await response.json()
+    if(!response.ok) {
+      throw json.errors
     }
 
     return this.startSession(response['token'])
@@ -72,7 +72,7 @@ export default class Worky {
     })
 
     let json = await response.json()
-    if (json['errors']) {
+    if (!response.ok) {
       throw json['errors']
     }
     return json
@@ -84,7 +84,7 @@ export default class Worky {
     })
 
     let json = await response.json()
-    if (json['errors']) {
+    if (!response.ok) {
       throw json['errors']
     }
     return json
@@ -114,7 +114,7 @@ export default class Worky {
     })
 
     let json = await response.json()
-    if (json['errors']) {
+    if (!response.ok) {
       throw json['errors']
     }
     return json
@@ -140,7 +140,7 @@ export default class Worky {
     })
 
     let json = await response.json()
-    if (json['errors']) {
+    if (!response.ok) {
       throw json['errors']
     }
     return json
