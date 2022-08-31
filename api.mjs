@@ -37,12 +37,12 @@ export default class Worky {
       'body': JSON.stringify({'username': username, 'password': password})
     })
 
-    json = await response.json()
+    let json = await response.json()
     if(!response.ok) {
       throw json.errors
     }
 
-    return this.startSession(response['token'])
+    return this.startSession(json['token'])
   }
 
   async startSession(token) {
