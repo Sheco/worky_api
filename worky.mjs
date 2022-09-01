@@ -73,7 +73,10 @@ try {
       let checkin_date = dayjs(timework.next_shift.start_time, 'HH:mm:ss')
       let checkout_date = dayjs(timework.current_shift.end_time, "HH:mm:ss")
       let relative_checkin = checkin_date.fromNow()
-      if (timework.can_check_next_shift && timework.can_check_next_shift) {
+
+      if(timework.is_day_off || timework.is_holiday || timework.is_pto_day || timework.is_vacation_day) {
+        console.log('You do not need to work today')
+      } else if (timework.can_check_next_shift && timework.can_check_next_shift) {
         console.log(`Checkin in: ${relative_checkin}`)
       } else if (timework.can_check_next_shift && timework.current_shift.start_time && !timework.record) {
         console.log(`Expected checkin: ${relative_checkin} (${timework.entry_tolerance} is ok)`)
