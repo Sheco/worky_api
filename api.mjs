@@ -37,11 +37,11 @@ export default class Worky {
       'body': JSON.stringify({'username': username, 'password': password})
     })
 
-    let json = await response.json()
     if(!response.ok) {
-      throw json.errors
+      throw await response.text()
     }
 
+    let json = await response.json()
     return this.startSession(json['token'])
   }
 
@@ -71,10 +71,10 @@ export default class Worky {
       'headers': this.headers
     })
 
-    let json = await response.json()
     if (!response.ok) {
-      throw json['errors']
+      throw await response.text()
     }
+    let json = await response.json()
     return json
   }
 
@@ -83,10 +83,10 @@ export default class Worky {
       'headers': this.headers
     })
 
-    let json = await response.json()
     if (!response.ok) {
-      throw json['errors']
+      throw await response.text()
     }
+    let json = await response.json()
     return json
   }
 
@@ -113,10 +113,10 @@ export default class Worky {
       })
     })
 
-    let json = await response.json()
     if (!response.ok) {
-      throw json['errors']
+      throw await response.text()
     }
+    let json = await response.json()
     return json
   }
 
@@ -139,10 +139,10 @@ export default class Worky {
       })
     })
 
-    let json = await response.json()
     if (!response.ok) {
-      throw json['errors']
+      throw response.text()
     }
+    let json = await response.json()
     return json
   }
 }
