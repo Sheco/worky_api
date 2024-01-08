@@ -69,30 +69,10 @@ try {
       console.log(timework)
     }
 
-    if (command === 'report') {
-      let checkin_date = dayjs(timework.next_shift.start_time, 'HH:mm:ss')
-      let checkout_date = dayjs(timework.current_shift.end_time, "HH:mm:ss")
-      let relative_checkin = checkin_date.fromNow()
-
-      if(timework.is_day_off || timework.is_holiday || timework.is_pto_day || timework.is_vacation_day) {
-        console.log('You do not need to work today')
-      } else if (timework.can_check_next_shift && timework.can_check_next_shift) {
-        console.log(`Checkin in: ${relative_checkin}`)
-      } else if (timework.can_check_next_shift && timework.current_shift.start_time && !timework.record) {
-        console.log(`Expected checkin: ${relative_checkin} (${timework.entry_tolerance} is ok)`)
-      } else if (timework.current_shift.start_time && timework.record) {
-        let minutesToCheckout = Math.round((checkout_date-dayjs())/60/1000)
-        let relative_checkout = checkout_date.fromNow()
-        if (minutesToCheckout > 0) {
-          console.log(`Checkout in ${relative_checkout}`)
-        } else {
-          console.log(`Should have checked out ${relative_checkout}`)
-        }
-
-      } else {
-        console.log(`'It looks you're good for now`)
-      }
-
+    if (command === 'status') {
+      let status = await worky.status(timework)
+      if(status=='unknown') console.log(timework)
+      console.log(status)
     }
 
     if (command === 'checkin') {
@@ -110,8 +90,8 @@ try {
   process.exit(0)
 } catch (errors) {
   console.error('ERROR', errors)
-  for (let err of errors) {
+/*  for (let err of errors) {
     console.log(err)
-  }
+  }*/
   process.exit(1)
 }

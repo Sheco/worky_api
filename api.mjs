@@ -145,4 +145,20 @@ export default class Worky {
     let json = await response.json()
     return json
   }
+
+  async status(timework) {
+      if(timework.is_day_off || timework.is_holiday || timework.is_pto_day || timework.is_vacation_day) {
+        return 'off'
+      } else if (timework.can_check_next_shift && timework.can_check_next_shift) {
+        return 'early'
+      } else if (timework.can_check_next_shift && timework.current_shift.start_time && !timework.record) {
+        return 'tolerance'
+      } else if(timework.current_shift.start_time && !timework.record) {
+        return 'late'
+      } else if (timework.current_shift.start_time && timework.record) {
+        return 'working'
+      } else {
+        return 'unknown'
+      }
+  }
 }
