@@ -161,4 +161,16 @@ export default class Worky {
         return 'unknown'
       }
   }
+
+  action_needed(status) {
+    let actions = {
+      off: 'none',
+      early: 'checkin',
+      tolerance: 'checkin',
+      late: 'checkin',
+      working: 'none',
+      unknown: 'none',
+    }
+    return actions[status]
+  }
 }

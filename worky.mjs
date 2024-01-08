@@ -72,7 +72,9 @@ try {
     if (command === 'status') {
       let status = await worky.status(timework)
       if(status=='unknown') console.log(timework)
-      console.log(status)
+      let action_needed = worky.action_needed(status)
+      console.log('status:', status)
+      console.log('action needed', action_needed)
     }
 
     if (command === 'checkin') {
