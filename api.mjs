@@ -149,7 +149,7 @@ export default class Worky {
   async status(timework) {
       if(timework.is_day_off || timework.is_holiday || timework.is_pto_day || timework.is_vacation_day) {
         return 'off'
-      } else if (timework.can_check_next_shift && timework.can_check_next_shift) {
+      } else if (timework.can_check_next_shift) {
         return 'early'
       } else if (timework.can_check_next_shift && timework.current_shift.start_time && !timework.record) {
         return 'tolerance'
@@ -157,6 +157,8 @@ export default class Worky {
         return 'late'
       } else if (timework.current_shift.start_time && timework.record) {
         return 'working'
+      } else if (!timework.can_check_next_shift) {
+        return 'finished'
       } else {
         return 'unknown'
       }
@@ -168,7 +170,8 @@ export default class Worky {
       early: 'checkin',
       tolerance: 'checkin',
       late: 'checkin',
-      working: 'none',
+      working: 'checkout',
+      finished: 'none',
       unknown: 'none',
     }
     return actions[status]
