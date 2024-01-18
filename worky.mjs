@@ -29,6 +29,13 @@ in the current directory.
   process.exit(1)
 }
 
+import { readSync } from 'fs'
+function getChar() {
+  let buffer = Buffer.alloc(1)
+  readSync(0, buffer, 0, 1)
+  return buffer.toString('utf8')
+}
+
 var args = minimist(process.argv.slice(2));
 
 const commands = args._
@@ -75,6 +82,17 @@ try {
       let action_available = worky.action_available(status)
       console.log('status:', status)
       console.log('action available', action_available)
+      if(action_available != 'none') {
+        console.log('Perform that? [yN]');
+        let response = getChar().toLowerCase()
+        if(response=='y') {
+          if(action_available == 'checkout') await worky.checkout(timework);
+          else if(action_available == 'checkin') await worky.checkin(timework);
+          let timework = await worky.status_timework()
+          let status = await worky.status(timework)
+          console.log('status:', status)
+        }
+      }
     }
 
     if (command === 'checkin') {
