@@ -164,7 +164,7 @@ export default class Worky {
       }
   }
 
-  action_needed(status) {
+  action_available(status) {
     let actions = {
       off: 'none',
       early: 'checkin',
